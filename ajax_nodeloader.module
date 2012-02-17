@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Реализация hook_menu()
  */
@@ -10,10 +9,10 @@ function ajax_nodeloader_menu() {
 	$items['node_load/node/%'] = array(
 		'title' => 'load node',	
 		'page callback' => 'load_node',
-		'page arguments' => array(1),		
+		'page arguments' => array(2),		
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
-	);	
+	);		
 	
 	return $items;
 }
@@ -24,6 +23,8 @@ function load_node($nid){
 	$output = false;
 	$delta = 0;
     $language = 'und';	
+	
+	//var_dump($nid);
 	
 	if (!is_numeric($nid))
 	{
@@ -50,12 +51,17 @@ function load_node($nid){
 		$node_info['title'] = $node->title;
 		$node_info['body'] = $node->body[$language][$delta]["value"];
 		$node_info['nid'] = $nid;
+		$output = $node_info;
 	}
 	
-	$output = drupal_json_output($node_info);
+	$result = drupal_json_encode($output);
+	drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
+	echo $result;
+	
+	//$result = echo drupal_json_encode($output);
 	//var_dump(drupal_json_decode($output));
 	//$output = drupal_json_decode($output);
 	
-	return $output;
+	return NULL;
 }
 
