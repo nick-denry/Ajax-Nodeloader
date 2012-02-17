@@ -6,19 +6,56 @@
  */
 function ajax_nodeloader_menu() {
 	$items = array();
-	$items['node_load/%'] = array(
-		'title' => 'Real estate',
-		'description' => 'Display real estate info',
+	
+	$items['node_load/node/%'] = array(
+		'title' => 'load node',	
 		'page callback' => 'load_node',
-		'page_arguments' => array(4),		
+		'page arguments' => array(1),		
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
-	);
+	);	
 	
 	return $items;
 }
 
-function load_node($path = "action", $arg = 0){	
-	$output = "<div>&nbsp;</div>";
+function load_node($nid){	
+	
+	/* init node loading */
+	$output = false;
+	$delta = 0;
+    $language = 'und';	
+	
+	if (!is_numeric($nid))
+	{
+		$system_path = drupal_lookup_path('source',$nid);
+		$path = split('/',$system_path);
+		if ($path[0] == 'node')
+		{
+			$nid = $path[1];
+		}
+		else		
+		{
+			$nid = 0;
+		}
+	}
+	
+	if ($nid != 0) 
+	{
+		$node = node_load($nid);	
+	}
+	
+	if ($node)
+	{
+		$node_info = array();
+		$node_info['title'] = $node->title;
+		$node_info['body'] = $node->body[$language][$delta]["value"];
+		$node_info['nid'] = $nid;
+	}
+	
+	$output = drupal_json_output($node_info);
+	//var_dump(drupal_json_decode($output));
+	//$output = drupal_json_decode($output);
+	
+	return $output;
 }
 
