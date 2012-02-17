@@ -1,0 +1,24 @@
+<?php
+
+
+/**
+ * Реализация hook_menu()
+ */
+function ajax_nodeloader_menu() {
+	$items = array();
+	$items['node_load/%'] = array(
+		'title' => 'Real estate',
+		'description' => 'Display real estate info',
+		'page callback' => 'load_node',
+		'page_arguments' => array(4),		
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	
+	return $items;
+}
+
+function load_node($path = "action", $arg = 0){	
+	$output = "<div>&nbsp;</div>";
+}
+
