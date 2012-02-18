@@ -1,5 +1,16 @@
 <?php
 
+
+/**
+ * 	Добавленние JavaScript
+ */
+ function ajax_nodeloader_init()
+ {
+	 drupal_add_css(drupal_get_path('module', 'ajax_nodeloader') . '/css/ajax_nodeloader.css');
+	 drupal_add_js(drupal_get_path('module', 'ajax_nodeloader') . '/js/ajax_nodeloader.js');
+ }
+
+
 /**
  * Реализация hook_menu()
  */
