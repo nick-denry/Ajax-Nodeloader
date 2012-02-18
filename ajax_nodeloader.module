@@ -2,7 +2,7 @@
 
 
 /**
- * 	Добавленние JavaScript
+ * 	Add js and css for module
  */
  function ajax_nodeloader_init()
  {
@@ -12,31 +12,31 @@
 
 
 /**
- * Реализация hook_menu()
+ * Implementation of hook_menu()
  */
 function ajax_nodeloader_menu() {
 	$items = array();
-	
+
 	$items['node_load/node/%'] = array(
-		'title' => 'load node',	
+		'title' => 'load node',
 		'page callback' => 'load_node',
-		'page arguments' => array(2),		
+		'page arguments' => array(2),
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
-	);		
-	
+	);
+
 	return $items;
 }
 
-function load_node($nid){	
-	
+function load_node($nid){
+
 	/* init node loading */
 	$output = false;
 	$delta = 0;
-    $language = 'und';	
-	
+    $language = 'und';
+
 	//var_dump($nid);
-	
+
 	if (!is_numeric($nid))
 	{
 		$system_path = drupal_lookup_path('source',$nid);
@@ -45,17 +45,17 @@ function load_node($nid){
 		{
 			$nid = $path[1];
 		}
-		else		
+		else
 		{
 			$nid = 0;
 		}
 	}
-	
-	if ($nid != 0) 
+
+	if ($nid != 0)
 	{
-		$node = node_load($nid);	
+		$node = node_load($nid);
 	}
-	
+
 	if ($node)
 	{
 		$node_info = array();
@@ -64,15 +64,11 @@ function load_node($nid){
 		$node_info['nid'] = $nid;
 		$output = $node_info;
 	}
-	
+
 	$result = drupal_json_encode($output);
 	drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
 	echo $result;
-	
-	//$result = echo drupal_json_encode($output);
-	//var_dump(drupal_json_decode($output));
-	//$output = drupal_json_decode($output);
-	
+
 	return NULL;
 }
 
