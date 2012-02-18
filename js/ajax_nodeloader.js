@@ -7,7 +7,7 @@
 		function nodeloader_click(){
 			$('#nodeloader-ajax-image').css('display','block');
 
-			// Unfortunally, we need to everride default explorer 7.0 behaviour
+			// Unfortunally, we need to override default explorer 7.0 behaviour
 			// see:
 			// @link: http://stackoverflow.com/questions/7793728/get-a-relative-path-with-jquery-attr-property-with-ie7
 			if (($.browser.msie) && ($.browser.version == '7.0'))
@@ -53,8 +53,11 @@
 			return false;
 		}
 
-		//Should replace this by someway
-	    $(document).delegate('ul#main-menu-links a','click',nodeloader_click);
+
+		// Delagate ajax loader to a.nodeloader links
+		if ($('a.nodeloader').length > 0) {
+			$(document).undelegate('a.nodeloader','click').delegate('a.nodeloader','click',nodeloader_click);
+		}
 
 	});
 })(jQuery);
