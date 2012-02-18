@@ -6,7 +6,10 @@
 
 		function nodeloader_click(){
 			$('#nodeloader-ajax-image').css('display','block');
-
+			
+			// Store current link for ajax call while detecting home
+			var current_link = $(this);
+			
 			// Unfortunally, we need to override default explorer 7.0 behaviour
 			// see:
 			// @link: http://stackoverflow.com/questions/7793728/get-a-relative-path-with-jquery-attr-property-with-ie7
@@ -30,6 +33,9 @@
 
 						//Set up values
 						$('#page-title').html(node.title);
+						//Set .home class for #page-title header
+						$('#page-title').toggleClass('home',current_link.attr('rel') == 'home');												
+						
 						$('.field-item').html(node.body);
 						$('#nodeloader-ajax-image').css('display','none');
 
