@@ -4,8 +4,7 @@
 
 		$('body').append('<div id="nodeloader-ajax-image">&nbsp;</div>');
 
-		//try to load hashtag page
-		//console.log(window.location.hash);
+		//try to load hashtag page		
 		if (window.location.hash != '')
 		{
 			var full_link = window.location.hash.substr(1);
@@ -90,6 +89,5 @@
 		if ($('a.nodeloader').length > 0) {
 			$(document).undelegate('a.nodeloader','click').delegate('a.nodeloader','click',nodeloader_click);
 		}
-
 	});
 })(jQuery);
