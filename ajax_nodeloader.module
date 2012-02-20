@@ -19,7 +19,7 @@ function ajax_nodeloader_menu() {
 
 	$items['node_load/node/%'] = array(
 		'title' => 'load node',
-		'page callback' => 'load_node',
+		'page callback' => 'ajax_nodeloader_load_node',
 		'page arguments' => array(2),
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
@@ -28,7 +28,7 @@ function ajax_nodeloader_menu() {
 	return $items;
 }
 
-function load_node($nid){
+function ajax_nodeloader_load_node($nid){
 
 	/* init node loading */
 	$output = false;
