@@ -1,7 +1,6 @@
 name = Ajax Nodeloader
 description = Simple module for load nodes via ajax
 package = Other
-version = 0.01 beta
 core = 7.x
 
 dependencies[] = path
