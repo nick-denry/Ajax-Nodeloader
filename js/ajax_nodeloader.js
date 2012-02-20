@@ -48,6 +48,10 @@
 
 						//Change hash for user
 						window.location.hash = full_link;
+						
+						//Set up .active class for current links
+						$('a').removeClass('active');
+						$('a[href="'+full_link+'"]').addClass('active');						
 
 
 					// Bind dynamically adding links click event
