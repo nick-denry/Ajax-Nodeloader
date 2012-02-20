@@ -31,7 +31,7 @@ function ajax_nodeloader_menu() {
 function ajax_nodeloader_load_node($nid){
 
 	/* init node loading */
-	$output = false;
+	$output = FALSE;
 	$delta = 0;
     $language = 'und';
 
