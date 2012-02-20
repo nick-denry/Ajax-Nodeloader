@@ -2,73 +2,66 @@
 
 
 /**
- * 	Add js and css for module
+ *  Add js and css for module
  */
- function ajax_nodeloader_init()
- {
-	 drupal_add_css(drupal_get_path('module', 'ajax_nodeloader') . '/css/ajax_nodeloader.css');
-	 drupal_add_js(drupal_get_path('module', 'ajax_nodeloader') . '/js/ajax_nodeloader.js');
- }
+function ajax_nodeloader_init() {
+  drupal_add_css(drupal_get_path('module', 'ajax_nodeloader') . '/css/ajax_nodeloader.css');
+  drupal_add_js(drupal_get_path('module', 'ajax_nodeloader') . '/js/ajax_nodeloader.js');
+}
 
 
 /**
- * Implementation of hook_menu()
+ * Implements of hook_menu()
  */
 function ajax_nodeloader_menu() {
-	$items = array();
+  $items = array();
 
-	$items['node_load/node/%'] = array(
-		'title' => 'load node',
-		'page callback' => 'ajax_nodeloader_load_node',
-		'page arguments' => array(2),
-		'access arguments' => array('access content'),
-		'type' => MENU_CALLBACK,
-	);
+  $items['node_load/node/%'] = array(
+    'title' => 'load node',
+    'page callback' => 'ajax_nodeloader_load_node',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
 
-	return $items;
+  return $items;
 }
 
-function ajax_nodeloader_load_node($nid){
+/**
+ * Implements of ajax_nodeloader_load_node()
+ */
+function ajax_nodeloader_load_node($nid) {
+  /* init node loading */
+  $output = FALSE;
+  $delta = 0;
+  $language = 'und';
 
-	/* init node loading */
-	$output = FALSE;
-	$delta = 0;
-    $language = 'und';
+  if (!is_numeric($nid)) {
+    $system_path = drupal_lookup_path('source',$nid);
+    $path = split('/',$system_path);
+    if ($path[0] == 'node') {
+      $nid = $path[1];
+    }
+    else {
+      $nid = 0;
+    }
+  }
 
-	//var_dump($nid);
+  if ($nid != 0) {
+    $node = node_load($nid);
+  }
 
-	if (!is_numeric($nid))
-	{
-		$system_path = drupal_lookup_path('source',$nid);
-		$path = split('/',$system_path);
-		if ($path[0] == 'node')
-		{
-			$nid = $path[1];
-		}
-		else
-		{
-			$nid = 0;
-		}
-	}
+  if ($node) {
+    $node_info = array();
+    $node_info['title'] = $node->title;
+    $node_info['body'] = $node->body[$language][$delta]["value"];
+    $node_info['nid'] = $nid;
+    $output = $node_info;
+  }
 
-	if ($nid != 0)
-	{
-		$node = node_load($nid);
-	}
+  $result = drupal_json_encode($output);
+  drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
+  echo $result;
 
-	if ($node)
-	{
-		$node_info = array();
-		$node_info['title'] = $node->title;
-		$node_info['body'] = $node->body[$language][$delta]["value"];
-		$node_info['nid'] = $nid;
-		$output = $node_info;
-	}
-
-	$result = drupal_json_encode($output);
-	drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
-	echo $result;
-
-	return NULL;
+  return NULL;
 }
-
