@@ -1,4 +1,3 @@
-; $Id$
 name = Ajax Nodeloader
 description = Simple module for load nodes via ajax
 package = Other
