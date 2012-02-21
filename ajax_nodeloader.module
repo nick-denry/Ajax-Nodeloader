@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Allow load node title and body field without reloading site pages 
+ * Allow load node title and body field without reloading site pages
  * via adding class "nodeloader" to your site links
  */
 
@@ -35,7 +35,7 @@ function ajax_nodeloader_menu() {
 
 /**
  * Implements of ajax_nodeloader_load_node()
- * 
+ *
  * @nid
  *   Numeric node id or path alias
  */
@@ -61,11 +61,11 @@ function ajax_nodeloader_load_node($nid) {
 
   if ($node) {
     $node_info = array();
-    $node_info['title'] = $node->title;    
-    // Get body filed value
-    $body_field = field_get_items('node',$node,'body',$node->language);    
+    $node_info['title'] = $node->title;
+    // Get body filed value.
+    $body_field = field_get_items('node', $node, 'body', $node->language);
     $node_info['body'] = render(field_view_value('node', $node, 'body', $body_field[$delta]));
-    
+
     $node_info['nid'] = $nid;
     $output = $node_info;
   }
