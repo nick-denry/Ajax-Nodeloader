@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @file
+ * Allow load node title and body field without reloading site pages 
+ * via adding class "nodeloader" to your site links
+ */
+
 
 /**
  *  Add js and css for module
@@ -11,7 +17,7 @@ function ajax_nodeloader_init() {
 
 
 /**
- * Implements of hook_menu()
+ * Implements of ajax_nodeloader_hook_menu()
  */
 function ajax_nodeloader_menu() {
   $items = array();
@@ -29,16 +35,18 @@ function ajax_nodeloader_menu() {
 
 /**
  * Implements of ajax_nodeloader_load_node()
+ * 
+ * @nid
+ *   Numeric node id or path alias
  */
 function ajax_nodeloader_load_node($nid) {
   /* init node loading */
   $output = FALSE;
   $delta = 0;
-  $language = 'und';
 
   if (!is_numeric($nid)) {
-    $system_path = drupal_lookup_path('source',$nid);
-    $path = split('/',$system_path);
+    $system_path = drupal_lookup_path('source', $nid);
+    $path = split('/', $system_path);
     if ($path[0] == 'node') {
       $nid = $path[1];
     }
@@ -53,8 +61,11 @@ function ajax_nodeloader_load_node($nid) {
 
   if ($node) {
     $node_info = array();
-    $node_info['title'] = $node->title;
-    $node_info['body'] = $node->body[$language][$delta]["value"];
+    $node_info['title'] = $node->title;    
+    // Get body filed value
+    $body_field = field_get_items('node',$node,'body',$node->language);    
+    $node_info['body'] = render(field_view_value('node', $node, 'body', $body_field[$delta]));
+    
     $node_info['nid'] = $nid;
     $output = $node_info;
   }
