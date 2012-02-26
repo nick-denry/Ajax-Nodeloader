@@ -25,15 +25,16 @@
                 url: '/node_load/node/'+link_href,
                 success: function(data){
                         //Process json answer
-                        var node = jQuery.parseJSON(data); //eval('(' + data + ')');
-                    
+                        //eval('(' + data + ')');
+                        var node = jQuery.parseJSON(data);
+
                         //Set .home class for #page-title header
                         $('#page-title').toggleClass('home',link_attr == 'home');
 
                         //Set up content to targets or default places
                         try {
                             var content_target = jQuery.parseJSON(link_attr.replace(/\'/g,'"'));
-                            
+
                             // Try to set up custom title
                             if ('title' in content_target) {
                                 $(content_target.title).html(node.title);
@@ -49,17 +50,17 @@
                             }
                             else {
                               //Set up default body
-                              $('.field-item').html(node.body);                          
+                              $('.field-item').html(node.body);
                             }
-                          
+
                         } catch(e) {
                           // If strng contains no json, set up default values
                           // Set up default title
                           $('#page-title').html(node.title);
                           //Set up default body
-                          $('.field-item').html(node.body);                          
-                        }                        
-                              
+                          $('.field-item').html(node.body);
+                        }
+
                         //Hide liader image
                         $('#nodeloader-ajax-image').css('display','none');
 
