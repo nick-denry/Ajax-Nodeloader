@@ -80,7 +80,7 @@
 
                     // Bind dynamically adding links click event
                     if ($('a.nodeloader').length > 0) {
-                        $(document).undelegate('a.nodeloader','click').delegate('a.nodeloader','click',nodeloader_click);
+                        $('a.nodeloader').die('click').live('click',nodeloader_click);
                     }
                 },
             dataType: 'ajax'
@@ -113,7 +113,7 @@
 
         // Delagate ajax loader to a.nodeloader links
         if ($('a.nodeloader').length > 0) {
-            $(document).undelegate('a.nodeloader','click').delegate('a.nodeloader','click',nodeloader_click);
+            $('a.nodeloader').die('click').live('click',nodeloader_click);
         }
     });
 })(jQuery);
