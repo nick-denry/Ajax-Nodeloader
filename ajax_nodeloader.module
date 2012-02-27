@@ -71,7 +71,7 @@ function ajax_nodeloader_load_node($nid) {
   }
 
   $result = drupal_to_js($output);
-  drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
+  drupal_set_header('Content-Type', 'text/javascript; charset=utf-8');
   echo $result;
 
   return NULL;
