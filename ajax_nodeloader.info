@@ -4,3 +4,4 @@ package = Other
 core = 6.x
 
 dependencies[] = path
+dependencies[] = jquery_update
