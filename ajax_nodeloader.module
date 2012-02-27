@@ -63,14 +63,14 @@ function ajax_nodeloader_load_node($nid) {
     $node_info = array();
     $node_info['title'] = $node->title;
     // Get body filed value.
-    $body_field = field_get_items('node', $node, 'body', $node->language);
-    $node_info['body'] = render(field_view_value('node', $node, 'body', $body_field[$delta]));
+    //$body_field = field_get_items('node', $node, 'body', $node->language);
+    $node_info['body'] = $node->body;//render(field_view_value('node', $node, 'body', $body_field[$delta]));
 
     $node_info['nid'] = $nid;
     $output = $node_info;
   }
 
-  $result = drupal_json_encode($output);
+  $result = drupal_to_js($output);
   drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
   echo $result;
 
