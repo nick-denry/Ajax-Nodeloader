@@ -81,7 +81,7 @@
                             }
                             else {
                               //Set up default title
-                              $('#page-title').html(node.title);
+                              $('h2.with-tabs').html(node.title);
                             }
 
                             // Try to set up custom body
@@ -90,15 +90,15 @@
                             }
                             else {
                               //Set up default body
-                              $('.field-item').html(node.body);
+                              $('div.node div.content').html(node.body);
                             }
 
                         } catch(e) {
                           // If strng contains no json, set up default values
                           // Set up default title
-                          $('#page-title').html(node.title);
+                          $('h2.with-tabs').html(node.title);
                           //Set up default body
-                          $('.field-item').html(node.body);
+                          $('div.node div.content').html(node.body);
                         }
 
                         //Hide liader image
