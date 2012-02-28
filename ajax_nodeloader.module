@@ -75,7 +75,7 @@ function ajax_nodeloader_load_node($nid) {
   // @see http://drupal.org/node/1086098
   // TODO json_encode for php < 5.2
   $result = json_encode($output);
-  drupal_set_header('Content-Type', 'text/javascript; charset=utf-8');
+  drupal_set_header('Content-Type: text/javascript; charset=utf-8');
   echo $result;
 
   return NULL;
