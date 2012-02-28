@@ -70,7 +70,11 @@ function ajax_nodeloader_load_node($nid) {
     $output = $node_info;
   }
 
-  $result = drupal_to_js($output);
+  // Unfortunally, we need to use pure json_encode instead
+  // drupal_to_js function to prevent wrong utf-8 json encoding
+  // @see http://drupal.org/node/1086098
+  // TODO json_encode for php < 5.2
+  $result = json_encode($output);
   drupal_set_header('Content-Type', 'text/javascript; charset=utf-8');
   echo $result;
 
