@@ -1,4 +1,46 @@
 (function ($) {
+  
+  // Add jquery parseJSON from jQuery 1.4.4
+  // @see https://github.com/jquery/jquery/blob/1.4.4/src/core.js#L42-46
+  // @see https://github.com/jquery/jquery/blob/1.4.4/src/core.js#L541-567
+
+  // JSON RegExp
+  var rvalidchars = /^[\],:{}\s]*$/,
+  rvalidescape = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
+  rvalidtokens = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+  rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g;
+
+  // parseJSON
+  $.extend({
+    
+    error: function( msg ) {
+      throw msg;
+    },
+
+    parseJSON: function( data ) {
+      if ( typeof data !== "string" || !data ) {
+        return null;
+      }
+
+      // Make sure leading/trailing whitespace is removed (IE can't handle it)
+      data = jQuery.trim( data );
+
+      // Make sure the incoming data is actual JSON
+      // Logic borrowed from http://json.org/json2.js
+        if ( rvalidchars.test(data.replace(rvalidescape, "@")
+          .replace(rvalidtokens, "]")
+        .replace(rvalidbraces, "")) ) {
+          // Try to use the native JSON parser first
+          return window.JSON && window.JSON.parse ?
+          window.JSON.parse( data ) :
+          (new Function("return " + data))();
+        } else {
+          jQuery.error( "Invalid JSON: " + data );
+        }
+      }
+  });
+
+  
     // Original JavaScript code.
     $(document).ready(function() {
 
