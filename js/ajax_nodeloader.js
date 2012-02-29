@@ -115,7 +115,7 @@
 
                         //Set up .active class for current links
                         $('a').removeClass('active');
-                        $('a[href="'+full_link+'"]').addClass('active');
+                        $('a[href="'+encoded_link+'"]').addClass('active');
 
 
                     // Bind dynamically adding links click event
