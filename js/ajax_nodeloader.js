@@ -104,11 +104,10 @@
                         $('#nodeloader-ajax-image').css('display','none');
 
                         // Set up drupal links for tabs Display and Edit
+                        // now simply via links order
                         if ($('ul.tabs.primary').length > 0) {
-                          $('ul.tabs.primary > li > a').each(function() {
-                            var new_href = $(this).attr('href').replace(/\d/g,node.nid);
-                            $(this).attr('href',new_href);
-                          });
+                          $($('ul.tabs.primary > li').children()[0]).attr('href',encoded_link);
+                          $($('ul.tabs.primary > li').children()[1]).attr('href','/node/'+node.nid+'/edit');
                         }
 
                         //Change hash for user
