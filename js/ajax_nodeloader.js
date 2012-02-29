@@ -45,10 +45,12 @@
                             // Try to set up custom body
                             if ('body' in content_target) {
                               $(content_target.body).html(node.body);
+                              Drupal.attachBehaviors(content_target.body);
                             }
                             else {
                               //Set up default body
                               $('.field-item').html(node.body);
+                              Drupal.attachBehaviors('.field-item');
                             }
 
                         } catch(e) {
@@ -57,6 +59,7 @@
                           $('#page-title').html(node.title);
                           //Set up default body
                           $('.field-item').html(node.body);
+                          Drupal.attachBehaviors('.field-item');
                         }
 
                         //Hide liader image
