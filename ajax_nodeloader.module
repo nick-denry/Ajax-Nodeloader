@@ -63,18 +63,17 @@ function ajax_nodeloader_url_load($arg, $map, $index) {
 function ajax_nodeloader_load_node($encoded_url) {
   /* init node loading */
   $output = FALSE;
-  $delta = 0;
 
-  if (!is_numeric($encoded_url)) {  
-    $system_path = drupal_lookup_path('source', $encoded_url);    
+  if (!is_numeric($encoded_url)) {
+    $system_path = drupal_lookup_path('source', $encoded_url);
     $path = split('/', $system_path);
-    $nid = $path[1];    
+    $nid = $path[1];
   }
   else {
-    $nid = $encoded_url;    
+    $nid = $encoded_url;
   }
 
-  
+
   if ($nid != 0) {
     $node = node_load($nid);
   }
