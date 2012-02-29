@@ -1,5 +1,5 @@
 (function ($) {
-  
+
   // Add jquery parseJSON from jQuery 1.4.4
   // @see https://github.com/jquery/jquery/blob/1.4.4/src/core.js#L42-46
   // @see https://github.com/jquery/jquery/blob/1.4.4/src/core.js#L541-567
@@ -12,7 +12,7 @@
 
   // parseJSON
   $.extend({
-    
+
     error: function( msg ) {
       throw msg;
     },
@@ -40,7 +40,7 @@
       }
   });
 
-  
+
     // Original JavaScript code.
     $(document).ready(function() {
 
@@ -57,7 +57,7 @@
         function nodeloader_load(encoded_link,link_attr) {
             //Display loader image
             $('#nodeloader-ajax-image').css('display','block');
-            
+
             //Make ajax call to module
             $.ajax({
                 type: 'GET',
