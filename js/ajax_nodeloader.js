@@ -86,10 +86,12 @@
                             // Try to set up custom body
                             if ('body' in content_target) {
                               $(content_target.body).html(node.body);
+                              Drupal.attachBehaviors(content_target.body);
                             }
                             else {
                               //Set up default body
                               $('div.node div.content').html(node.body);
+                              Drupal.attachBehaviors('div.node div.content');
                             }
 
                         } catch(e) {
@@ -98,6 +100,7 @@
                           $('h2.with-tabs').html(node.title);
                           //Set up default body
                           $('div.node div.content').html(node.body);
+                          Drupal.attachBehaviors('div.node div.content');
                         }
 
                         //Hide liader image
