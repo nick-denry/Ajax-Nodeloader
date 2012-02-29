@@ -18,7 +18,7 @@
     },
 
     parseJSON: function( data ) {
-      if ( typeof data !== "string" || !data ) {
+      if (typeof data !== "string" || !data) {
         return null;
       }
 
@@ -27,7 +27,7 @@
 
       // Make sure the incoming data is actual JSON
       // Logic borrowed from http://json.org/json2.js
-        if ( rvalidchars.test(data.replace(rvalidescape, "@")
+        if (rvalidchars.test(data.replace(rvalidescape, "@")
           .replace(rvalidtokens, "]")
         .replace(rvalidbraces, "")) ) {
           // Try to use the native JSON parser first
