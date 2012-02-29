@@ -22,10 +22,20 @@ function ajax_nodeloader_init() {
 function ajax_nodeloader_menu() {
   $items = array();
 
-  $items['node_load/node/%'] = array(
+  $items['node_load/%ajax_nodeloader_url'] = array(
+    'title' => 'load node via alias',
+    'page callback' => 'ajax_nodeloader_load_node',
+    'page arguments' => array(1),
+    'load arguments' => array('%map','%index'),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['node_load/node/%ajax_nodeloader_url'] = array(
     'title' => 'load node',
     'page callback' => 'ajax_nodeloader_load_node',
     'page arguments' => array(2),
+    'load arguments' => array('%map','%index'),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
@@ -34,27 +44,37 @@ function ajax_nodeloader_menu() {
 }
 
 /**
+ * Use %wildcard_load to get dynamically
+ * separated parts imploded into one string
+ *   @see http://drupal.org/node/109153
+ *   @see http://api.drupal.org/api/drupal/includes!menu.inc/function/menu_tail_to_arg/6
+ */
+
+function ajax_nodeloader_url_load($arg, $map, $index) {
+    return implode("/",array_slice($map,$index));
+}
+
+/**
  * Implements of ajax_nodeloader_load_node()
  *
- * @nid
- *   Numeric node id or path alias
+ * @encoded_url
+ *   Encoded content url. It can be like /node/1 or /something/alias.html
  */
-function ajax_nodeloader_load_node($nid) {
+function ajax_nodeloader_load_node($encoded_url) {
   /* init node loading */
   $output = FALSE;
   $delta = 0;
 
-  if (!is_numeric($nid)) {
-    $system_path = drupal_lookup_path('source', $nid);
+  if (!is_numeric($encoded_url)) {  
+    $system_path = drupal_lookup_path('source', $encoded_url);    
     $path = split('/', $system_path);
-    if ($path[0] == 'node') {
-      $nid = $path[1];
-    }
-    else {
-      $nid = 0;
-    }
+    $nid = $path[1];    
+  }
+  else {
+    $nid = $encoded_url;    
   }
 
+  
   if ($nid != 0) {
     $node = node_load($nid);
   }

@@ -54,15 +54,14 @@
         }
 
         //function to load page
-        function nodeloader_load(full_link,link_attr) {
+        function nodeloader_load(encoded_link,link_attr) {
             //Display loader image
             $('#nodeloader-ajax-image').css('display','block');
-            //Get clean "some.html" or node number
-            var link_href = full_link.substr(1).replace('node/','');
+            
             //Make ajax call to module
             $.ajax({
                 type: 'GET',
-                url: '/node_load/node/'+link_href,
+                url: '/node_load/node/'+encoded_link,
                 success: function(data) {
                         //Process json answer
                         //eval('(' + data + ')');
@@ -113,7 +112,7 @@
                         }
 
                         //Change hash for user
-                        window.location.hash = full_link;
+                        window.location.hash = encoded_link;
 
                         //Set up .active class for current links
                         $('a').removeClass('active');
@@ -144,6 +143,11 @@
             else {
                 var full_link = $(this).attr('href');
             }
+
+            // Encode link to pass it as param to drupal
+            // Additional replacemets for avoid Apache
+            // "AllowEncodedSlashes Off" or the same
+            var encoded_link = encodeURIComponent(full_link).replace(/%2F/g,'%252F').replace(/%5C/g,'%255C');
 
             //load node
             nodeloader_load(full_link,current_link.attr('rel'));
