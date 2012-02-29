@@ -49,9 +49,8 @@ function ajax_nodeloader_menu() {
  *   @see http://drupal.org/node/109153
  *   @see http://api.drupal.org/api/drupal/includes!menu.inc/function/menu_tail_to_arg/6
  */
-
 function ajax_nodeloader_url_load($arg, $map, $index) {
-    return implode("/",array_slice($map,$index));
+    return implode("/", array_slice($map, $index));
 }
 
 /**
@@ -82,8 +81,9 @@ function ajax_nodeloader_load_node($encoded_url) {
     $node_info = array();
     $node_info['title'] = $node->title;
     // Get body filed value.
-    //$body_field = field_get_items('node', $node, 'body', $node->language);
-    $node_info['body'] = $node->body;//render(field_view_value('node', $node, 'body', $body_field[$delta]));
+    // $body_field = field_get_items('node', $node, 'body', $node->language);
+    // render(field_view_value('node', $node, 'body', $body_field[$delta]));
+    $node_info['body'] = $node->body;
 
     $node_info['nid'] = $nid;
     $output = $node_info;
