@@ -41,121 +41,121 @@
   });
 
 
-    // Original JavaScript code.
-    $(document).ready(function() {
+  // Original JavaScript code.
+  $(document).ready(function() {
+    //Append nodeloader ajax image
+    $('body').append('<div id="nodeloader-ajax-image">&nbsp;</div>');
 
-        //Append nodeloader ajax image
-        $('body').append('<div id="nodeloader-ajax-image">&nbsp;</div>');
+    //try to load hashtag page
+    if (window.location.hash != '') {
+      var full_link = window.location.hash.substr(1);
+      nodeloader_load(full_link,$('a[href="'+full_link+'"]').attr('rel'));
+    }
 
-        //try to load hashtag page
-        if (window.location.hash != '') {
-            var full_link = window.location.hash.substr(1);
-            nodeloader_load(full_link,$('a[href="'+full_link+'"]').attr('rel'));
-        }
+    //function to load page
+    function nodeloader_load(encoded_link,link_attr) {
+      //Display loader image
+      $('#nodeloader-ajax-image').css('display','block');
 
-        //function to load page
-        function nodeloader_load(encoded_link,link_attr) {
-            //Display loader image
-            $('#nodeloader-ajax-image').css('display','block');
+      //Make ajax call to module
+      $.ajax({
+        type: 'GET',
+        url: '/node_load/node/'+encoded_link,
+        success: function(data) {
+          //Process json answer
+          //eval('(' + data + ')');
+          var node = jQuery.parseJSON(data);
 
-            //Make ajax call to module
-            $.ajax({
-                type: 'GET',
-                url: '/node_load/node/'+encoded_link,
-                success: function(data) {
-                        //Process json answer
-                        //eval('(' + data + ')');
-                        var node = jQuery.parseJSON(data);
+          //Set .home class for #page-title header
+          $('#page-title').toggleClass('home',link_attr == 'home');
 
-                        //Set .home class for #page-title header
-                        $('#page-title').toggleClass('home',link_attr == 'home');
+          //Set up content to targets or default places
+          var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze h2',
+          body:'div.node > div.content'});
 
-                        //Set up content to targets or default places
-                        var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze h2', body:'div.node > div.content'});
-                        
-                        try {
-                            var content_target = jQuery.parseJSON(link_attr.replace(/\'/g,'"'));
+          try {
+            var content_target = jQuery.parseJSON(link_attr.replace(/\'/g,'"'));
 
-                            // Try to set up custom title
-                            if ('title' in content_target) {
-                              ajaxNodeloaderDisplay.title = content_target.title;                                
-                            }
-                            
-                            // Try to set up custom body
-                            if ('body' in content_target) {
-                              ajaxNodeloaderDisplay.body = content_target.body;                                    
-                            }                            
-
-                        } catch(e) {
-                          // Do nothing
-                        }
-
-                        // If strng contains no json, set up default values
-                        // Set up default title
-                        $(ajaxNodeloaderDisplay.title).html(node.title);
-                        //Set up default body
-                        $(ajaxNodeloaderDisplay.body).html(node.body);
-                        Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
-
-                        //Hide liader image
-                        $('#nodeloader-ajax-image').css('display','none');
-
-                        // Set up drupal links for tabs Display and Edit
-                        // now simply via links order
-                        if ($('ul.tabs.primary').length > 0) {
-                          $($('ul.tabs.primary > li').children()[0]).attr('href',encoded_link);
-                          $($('ul.tabs.primary > li').children()[1]).attr('href','/node/'+node.nid+'/edit');
-                        }
-
-                        //Change hash for user
-                        window.location.hash = encoded_link;
-
-                        //Set up .active class for current links
-                        $('a').removeClass('active');
-                        $('a[href="'+encoded_link+'"]').addClass('active');
-
-
-                    // Bind dynamically adding links click event
-                    if ($('a.nodeloader').length > 0) {
-                        $('a.nodeloader').die('click').live('click',nodeloader_click);
-                    }
-                },
-            dataType: 'ajax'
-            });
-        }
-
-
-        function nodeloader_click() {
-
-            // Store current link for ajax call while detecting home
-            var current_link = $(this);
-
-            // Unfortunally, we need to override default explorer 7.0 behaviour
-            // see:
-            // @link: http://stackoverflow.com/questions/7793728/get-a-relative-path-with-jquery-attr-property-with-ie7
-            if (($.browser.msie) && ($.browser.version == '7.0')) {
-                var full_link = $(this).attr('href').replace('http://'+window.location.hostname,'');
-            }
-            else {
-                var full_link = $(this).attr('href');
+            // Try to set up custom title
+            if ('title' in content_target) {
+              ajaxNodeloaderDisplay.title = content_target.title;
             }
 
-            // Encode link to pass it as param to drupal
-            // Additional replacemets for avoid Apache
-            // "AllowEncodedSlashes Off" or the same
-            var encoded_link = encodeURIComponent(full_link).replace(/%2F/g,'%252F').replace(/%5C/g,'%255C');
+            // Try to set up custom body
+            if ('body' in content_target) {
+              ajaxNodeloaderDisplay.body = content_target.body;
+            }
+          } catch(e) {
+              // Do nothing
+          }
 
-            //load node
-            nodeloader_load(full_link,current_link.attr('rel'));
+          // Set up values
+          // Title
+          $(ajaxNodeloaderDisplay.title).html(node.title);
+          // And body
+          $(ajaxNodeloaderDisplay.body).html(node.body);
+          // Attach Drupal behaviors
+          Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
 
-            // We don't really want default click
-            return false;
-        }
+          //Hide liader image
+          $('#nodeloader-ajax-image').css('display','none');
+
+          // Set up drupal links for tabs Display and Edit
+          // now simply via links order
+          if ($('ul.tabs.primary').length > 0) {
+            $($('ul.tabs.primary > li').children()[0]).attr('href', encoded_link);
+            $($('ul.tabs.primary > li').children()[1]).attr('href', '/node/'+node.nid+'/edit');
+          }
+
+          // Change hash for user
+          window.location.hash = encoded_link;
+
+          // Set up .active class for current links
+          $('a').removeClass('active');
+          $('a[href="'+encoded_link+'"]').addClass('active');
 
 
-        // Delagate ajax loader to a.nodeloader links
-        if ($('a.nodeloader').length > 0) {
+          // Bind dynamically adding links click event
+          if ($('a.nodeloader').length > 0) {
             $('a.nodeloader').die('click').live('click',nodeloader_click);
-        }
-    });
+          }
+        },
+        dataType: 'ajax'
+      });
+    }
+
+
+    function nodeloader_click() {
+
+      // Store current link for ajax call while detecting home
+      var current_link = $(this);
+
+      // Unfortunally, we need to override default explorer 7.0 behaviour
+      // see:
+      // @link: http://stackoverflow.com/questions/7793728/get-a-relative-path-with-jquery-attr-property-with-ie7
+      if (($.browser.msie) && ($.browser.version == '7.0')) {
+        var full_link = $(this).attr('href').replace('http://'+window.location.hostname,'');
+      }
+      else {
+        var full_link = $(this).attr('href');
+      }
+
+      // Encode link to pass it as param to drupal
+      // Additional replacemets for avoid Apache
+      // "AllowEncodedSlashes Off" or the same
+      var encoded_link = encodeURIComponent(full_link).replace(/%2F/g,'%252F').replace(/%5C/g,'%255C');
+
+      //load node
+      nodeloader_load(full_link,current_link.attr('rel'));
+
+      // We don't really want default click
+      return false;
+    }
+
+
+    // Delagate ajax loader to a.nodeloader links
+    if ($('a.nodeloader').length > 0) {
+      $('a.nodeloader').die('click').live('click',nodeloader_click);
+    }
+  });
 })(jQuery);
