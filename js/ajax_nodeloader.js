@@ -29,38 +29,33 @@
           $('#page-title').toggleClass('home', link_attr == 'home');
 
           //Set up content to targets or default places
+          var ajaxNodeloaderDisplay = new Object ({title:'#page-title',
+          body:'.field-item'});
+
           try {
             var content_target = jQuery.parseJSON(link_attr.replace(/\'/g, '"'));
 
             // Try to set up custom title
             if ('title' in content_target) {
-              $(content_target.title).html(node.title);
-            }
-            else {
-              //Set up default title
-              $('#page-title').html(node.title);
+              ajaxNodeloaderDisplay.title = content_target.title;
             }
 
             // Try to set up custom body
             if ('body' in content_target) {
-              $(content_target.body).html(node.body);
-              Drupal.attachBehaviors(content_target.body);
-            }
-            else {
-              //Set up default body
-              $('.field-item').html(node.body);
-              Drupal.attachBehaviors('.field-item');
+              ajaxNodeloaderDisplay.body = content_target.body;
             }
           }
           catch(e) {
-            // If strng contains no json, set up default values
-            // Set up default title
-            $('#page-title').html(node.title);
-            //Set up default body
-            $('.field-item').html(node.body);
-            Drupal.attachBehaviors('.field-item');
+            // Do nothing
           }
 
+          // Set up values
+          // Title
+          $(ajaxNodeloaderDisplay.title).html(node.title);
+          // And body
+          $(ajaxNodeloaderDisplay.body).html(node.body);
+          // Attach Drupal behaviors
+          Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
           //Hide liader image
           $('#nodeloader-ajax-image').css('display','none');
 
