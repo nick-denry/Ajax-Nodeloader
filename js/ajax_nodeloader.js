@@ -71,37 +71,31 @@
                         $('#page-title').toggleClass('home',link_attr == 'home');
 
                         //Set up content to targets or default places
+                        var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze h2', body:'div.node > div.content'});
+                        
                         try {
                             var content_target = jQuery.parseJSON(link_attr.replace(/\'/g,'"'));
 
                             // Try to set up custom title
                             if ('title' in content_target) {
-                                $(content_target.title).html(node.title);
+                              ajaxNodeloaderDisplay.title = content_target.title;                                
                             }
-                            else {
-                              //Set up default title
-                              $('h2.with-tabs').html(node.title);
-                            }
-
+                            
                             // Try to set up custom body
                             if ('body' in content_target) {
-                              $(content_target.body).html(node.body);
-                              Drupal.attachBehaviors(content_target.body);
-                            }
-                            else {
-                              //Set up default body
-                              $('div.node div.content').html(node.body);
-                              Drupal.attachBehaviors('div.node div.content');
-                            }
+                              ajaxNodeloaderDisplay.body = content_target.body;                                    
+                            }                            
 
                         } catch(e) {
-                          // If strng contains no json, set up default values
-                          // Set up default title
-                          $('h2.with-tabs').html(node.title);
-                          //Set up default body
-                          $('div.node div.content').html(node.body);
-                          Drupal.attachBehaviors('div.node div.content');
+                          // Do nothing
                         }
+
+                        // If strng contains no json, set up default values
+                        // Set up default title
+                        $(ajaxNodeloaderDisplay.title).html(node.title);
+                        //Set up default body
+                        $(ajaxNodeloaderDisplay.body).html(node.body);
+                        Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
 
                         //Hide liader image
                         $('#nodeloader-ajax-image').css('display','none');
