@@ -106,7 +106,7 @@
           // Set up drupal links for tabs Display and Edit
           // now simply via links order
           if ($('ul.tabs.primary').length > 0) {
-            $($('ul.tabs.primary > li').children()[0]).attr('href', encoded_link);
+            $($('ul.tabs.primary > li').children()[0]).attr('href', full_link);
             $($('ul.tabs.primary > li').children()[1]).attr('href', '/node/'+node.nid+'/edit');
           }
 
@@ -115,7 +115,7 @@
 
           // Set up .active class for current links
           $('a').removeClass('active');
-          $('a[href="'+encoded_link+'"]').addClass('active');
+          $('a[href="'+full_link+'"]').addClass('active');
 
 
           // Bind dynamically adding links click event
