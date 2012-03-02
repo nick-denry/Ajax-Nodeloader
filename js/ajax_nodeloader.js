@@ -59,7 +59,7 @@
 
       //Remove slash
       var link_href = full_link.substr(1);
-      
+
       //Make ajax call to module
       $.ajax({
         type: 'GET',
@@ -141,7 +141,7 @@
       }
       else {
         var full_link = $(this).attr('href');
-      }      
+      }
 
       //load node
       nodeloader_load(full_link,current_link.attr('rel'));
