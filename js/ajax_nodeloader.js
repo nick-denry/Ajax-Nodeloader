@@ -15,11 +15,11 @@
       //Display loader image
       $('#nodeloader-ajax-image').css('display','block');
       //Get clean "some.html" or node number
-      var link_href = full_link.substr(1).replace('node/','');
+      var link_href = full_link.substr(1);
       //Make ajax call to module
       $.ajax({
         type: 'GET',
-        url: '/node_load/node/'+link_href,
+        url: '/node_load/'+link_href,
         success: function(data) {
           //Process json answer
           //eval('(' + data + ')');
