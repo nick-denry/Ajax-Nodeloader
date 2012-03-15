@@ -35,6 +35,11 @@
           try {
             var content_targets = jQuery.parseJSON(link_attr.replace(/\'/g, '"'));
 
+            if ('title' in content_targets) {
+              $(content_targets['title']).html(node.title);
+              delete(node.title);
+            }
+
             for(var target_name in content_targets) {
               $(content_targets[target_name]).html(node.fields[target_name]);
               // remove node filed to prevent
