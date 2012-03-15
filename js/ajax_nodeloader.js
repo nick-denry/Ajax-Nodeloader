@@ -30,19 +30,16 @@
 
           //Set up content to targets or default places
           var ajaxNodeloaderDisplay = new Object ({title:'#page-title',
-          body:'.field-item'});
+          content:'div.node > div.content'});
 
           try {
-            var content_target = jQuery.parseJSON(link_attr.replace(/\'/g, '"'));
+            var content_targets = jQuery.parseJSON(link_attr.replace(/\'/g, '"'));
 
-            // Try to set up custom title
-            if ('title' in content_target) {
-              ajaxNodeloaderDisplay.title = content_target.title;
-            }
-
-            // Try to set up custom body
-            if ('body' in content_target) {
-              ajaxNodeloaderDisplay.body = content_target.body;
+            for(var target_name in content_targets) {
+              $(content_targets[target_name]).html(node.fields[target_name]);
+              // remove node filed to prevent
+              // it's displaying in default section
+              delete(node.fields[target_name]);
             }
           }
           catch(e) {
@@ -52,10 +49,20 @@
           // Set up values
           // Title
           $(ajaxNodeloaderDisplay.title).html(node.title);
-          // And body
-          $(ajaxNodeloaderDisplay.body).html(node.body);
+
+          // Set up node fields
+          // Clean content
+          $(ajaxNodeloaderDisplay.content).empty();
+
+          // Set up fileds
+          for(var node_element in node.fields) {
+            $(ajaxNodeloaderDisplay.content).append('<div class="field field-name-'+node_element.replace(/_/g,'-')+' field-label-hidden">'+node.fields[node_element]+'</div>');
+          }
+
           // Attach Drupal behaviors
-          Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
+          Drupal.attachBehaviors(ajaxNodeloaderDisplay.content);
+
+
           //Hide liader image
           $('#nodeloader-ajax-image').css('display','none');
 

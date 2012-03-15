@@ -80,12 +80,26 @@ function ajax_nodeloader_load_node($encoded_url) {
 
   if ($node) {
     $node_info = array();
-    $node_info['title'] = $node->title;
-    // Get body filed value.
-    $body_field = field_get_items('node', $node, 'body', $node->language);
-    $node_info['body'] = render(field_view_value('node', $node, 'body', $body_field[$delta]));
 
+    // set node id
     $node_info['nid'] = $nid;
+
+    // set node title
+    $node_info['title'] = $node->title;
+
+    // Get other node fields (include body)
+    $node_fields = field_info_fields(); // get all fields
+
+    foreach($node_fields as $node_field) {
+      // get ode field items
+      $field_item = field_get_items('node', $node, $node_field['field_name'], $node->language);
+
+      // if item not emty add it to array
+      if ($field_item !== FALSE) {
+        $node_info['fields'][$node_field['field_name']] = render(field_view_value('node', $node, $node_field['field_name'], $field_item[$delta]));
+       }
+    }
+
     $output = $node_info;
   }
 
