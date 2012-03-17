@@ -19,7 +19,7 @@
       //Make ajax call to module
       $.ajax({
         type: 'GET',
-        url: '/node_load/'+link_href,
+        url: Drupal.settings.pathPrefix+'node_load/'+link_href,
         success: function(data) {
           //Process json answer
           //eval('(' + data + ')');
