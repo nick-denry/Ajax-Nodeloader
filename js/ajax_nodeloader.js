@@ -16,10 +16,11 @@
       $('#nodeloader-ajax-image').css('display','block');
       //Get clean "some.html" or node number
       var link_href = full_link.substr(1);
+      var link_prefix = Drupal.settings.pathPrefix == ""?"/":Drupal.settings.pathPrefix;
       //Make ajax call to module
       $.ajax({
         type: 'GET',
-        url: Drupal.settings.pathPrefix+'node_load/'+link_href,
+        url: link_prefix+'node_load/'+link_href,
         success: function(data) {
           //Process json answer
           //eval('(' + data + ')');
