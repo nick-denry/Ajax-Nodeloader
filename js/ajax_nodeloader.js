@@ -62,7 +62,9 @@
 
           // Set up fileds
           for(var node_element in node.fields) {
-            $(ajaxNodeloaderDisplay.content).append('<div class="field field-name-'+node_element.replace(/_/g,'-')+' field-label-hidden">'+node.fields[node_element]+'</div>');
+            if(node.fields[node_element] != null) {
+              $(ajaxNodeloaderDisplay.content).append('<div class="field field-name-'+node_element.replace(/_/g,'-')+' field-label-hidden">'+node.fields[node_element]+'</div>');
+            }            
           }
 
           // Attach Drupal behaviors
