@@ -89,10 +89,15 @@
           $('a').removeClass('active');
           $('a[href="'+full_link+'"]').addClass('active');
 
-
           // Bind dynamically adding links click event
           if ($('a.nodeloader').length > 0) {
             $(document).undelegate('a.nodeloader','click').delegate('a.nodeloader','click',nodeloader_click);
+          }
+
+          // Google analytics tracking support for the "visited" page.
+          // Works only with new version of Google Analytics code.
+          if (typeof _gaq !== "undefined") {
+            _gaq.push(['_trackPageview', full_link]);
           }
         },
         dataType: 'ajax'
