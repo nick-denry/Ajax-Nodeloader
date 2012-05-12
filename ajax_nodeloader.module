@@ -50,7 +50,7 @@ function ajax_nodeloader_menu() {
  *   @see http://api.drupal.org/api/drupal/includes!menu.inc/function/menu_tail_to_arg/6
  */
 function ajax_nodeloader_url_load($arg, $map, $index) {
-    return implode("/", array_slice($map, $index));
+  return implode("/", array_slice($map, $index));
 }
 
 /**
