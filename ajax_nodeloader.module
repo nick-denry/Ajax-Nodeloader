@@ -50,7 +50,7 @@ function ajax_nodeloader_menu() {
  *   @see http://api.drupal.org/api/drupal/includes!menu.inc/function/menu_tail_to_arg/6
  */
 function ajax_nodeloader_url_load($arg, $map, $index) {
-    return implode("/", array_slice($map, $index));
+  return implode("/", array_slice($map, $index));
 }
 
 /**
@@ -81,23 +81,24 @@ function ajax_nodeloader_load_node($encoded_url) {
   if ($node) {
     $node_info = array();
 
-    // set node id
+    // Set node id.
     $node_info['nid'] = $nid;
 
-    // set node title
+    // Set node title.
     $node_info['title'] = $node->title;
 
     // Get other node fields (include body)
-    $node_fields = field_info_fields(); // get all fields
+    // Get all fields.
+    $node_fields = field_info_fields();
 
-    foreach($node_fields as $node_field) {
-      // get ode field items
+    foreach ($node_fields as $node_field) {
+      // Get node field items.
       $field_item = field_get_items('node', $node, $node_field['field_name'], $node->language);
 
-      // if item not emty add it to array
+      // If item not emty add it to array.
       if ($field_item !== FALSE) {
         $node_info['fields'][$node_field['field_name']] = render(field_view_value('node', $node, $node_field['field_name'], $field_item[$delta]));
-       }
+      }
     }
 
     $output = $node_info;
