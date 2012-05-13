@@ -1,0 +1,32 @@
+Ajax Nodeloader 0.5, 2012-05-13
+------------------------
+- Don't display empty or hidden node fields.
+- Add Google analytics tracking support.
+
+Ajax Nodeloader 0.4, 2012-03-17
+------------------------
+- Add language path prefix to call module for multilanguage sites.
+- Add patrial support of loading any fields for Drupal 7 (include custom css selectors).
+- Fix regessions:
+  * Set title to custom selector regression
+  * Fix link prefix for empty Drupal.settings.pathPrefix
+
+Ajax Nodeloader 0.3, 2012-02-29
+------------------------
+- Replace js eval to more safer jQuery.parseJSON.
+- Add Drupal.attachBehaviors to loaded content, so lightbox2 or so on modules can be 
+  used with Ajax Nodeloaader.
+- Add support for custom css selectors to display body or title in that selectors.
+
+Ajax Nodeloader 0.2, 2012-02-21
+------------------------
+- Add support for ajax hash tag navigation.
+- Add links classes:
+  * Custom .home class to home page title header, so it can be hidden or displaying with css.
+  * Active class for current loaded link.
+- Add module README.txt.
+- Load node body more properly using FieldAPI.
+
+Ajax Nodeloader 0.1, 2012-02-18
+------------------------
+- Basic ajax nodeloader functionality.
