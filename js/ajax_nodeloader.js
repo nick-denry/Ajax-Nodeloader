@@ -96,8 +96,13 @@
 
           // Google analytics tracking support for the "visited" page.
           // Works only with new version of Google Analytics code.
-          if (typeof _gaq !== "undefined") {
-            _gaq.push(['_trackPageview', full_link]);
+
+          // Check module settings first.
+          if (Drupal.settings.ajax_nodeloader.use_google_tracking) {
+            // Check if Analytics code available.
+            if (typeof _gaq !== "undefined") {
+              _gaq.push(['_trackPageview', full_link]);
+            }
           }
         },
         dataType: 'ajax'
