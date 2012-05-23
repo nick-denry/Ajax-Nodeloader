@@ -77,7 +77,7 @@
           // Set up drupal links for tabs Display and Edit
           if ($('ul.tabs.primary').length > 0) {
             $('ul.tabs.primary > li > a').each(function() {
-              var new_href = $(this).attr('href').replace(/\d/g,node.nid);
+              var new_href = $(this).attr('href').replace(/\d+/g,node.nid);
               $(this).attr('href',new_href);
             });
           }
