@@ -19,7 +19,7 @@ function ajax_nodeloader_init() {
   // AJAX loader image delay.
   $options = array();
   $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking') == 1 ? TRUE : FALSE;
-  $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay',0);
+  $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
 
   drupal_add_js(array('ajax_nodeloader' => $options), 'setting');
 }
