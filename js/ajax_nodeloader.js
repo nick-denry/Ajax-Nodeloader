@@ -69,10 +69,6 @@
           // Attach Drupal behaviors.
           Drupal.attachBehaviors(ajaxNodeloaderDisplay.content);
 
-
-          // Hide loader image.
-          $('#nodeloader-ajax-image').css('display','none');
-
           // Set up drupal links for tabs Display and Edit.
           if ($('ul.tabs.primary').length > 0) {
             $('ul.tabs.primary > li > a').each(function() {
@@ -103,6 +99,9 @@
               _gaq.push(['_trackPageview', full_link]);
             }
           }
+
+          // Hide loader image.
+          $('#nodeloader-ajax-image').css('display','none');
         },
         dataType: 'ajax'
       });
