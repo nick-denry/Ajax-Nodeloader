@@ -39,9 +39,9 @@ function ajax_nodeloader_admin() {
 
   $form['ajax_nodeloader_loader_image_delay'] = array(
     '#type' => 'textfield',
-    '#title' => t('AJAX loader image delay'),
+    '#title' => t('AJAX loader image delay (milliseconds)'),
     '#default_value' => variable_get('ajax_nodeloader_loader_image_delay', 0),
-    '#description' => t("Use delay to avoid loader image blink on fast connections (in milliseconds)."),
+    '#description' => t("Use delay to avoid loader image blink on fast connections."),
   );
 
   return system_settings_form($form);
