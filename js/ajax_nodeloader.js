@@ -101,7 +101,13 @@
           }
 
           // Hide loader image.
-          $('#nodeloader-ajax-image').css('display','none');
+          if (Drupal.settings.ajax_nodeloader.ajax_loader_delay != 0) {
+            setTimeout(function() {
+              $('#nodeloader-ajax-image').css('display','none');
+            },Drupal.settings.ajax_nodeloader.ajax_loader_delay);
+          } else {
+            $('#nodeloader-ajax-image').css('display','none');
+          }
         },
         dataType: 'ajax'
       });
