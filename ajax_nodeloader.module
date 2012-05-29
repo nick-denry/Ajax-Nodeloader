@@ -8,7 +8,7 @@
 
 
 /**
- *  Add js and css for module
+ *  Add js and css for module.
  */
 function ajax_nodeloader_init() {
   drupal_add_css(drupal_get_path('module', 'ajax_nodeloader') . '/css/ajax_nodeloader.css');
@@ -21,7 +21,7 @@ function ajax_nodeloader_init() {
 }
 
 /**
- * Implements of ajax_nodeloader_admin()
+ * Implements of ajax_nodeloader_admin().
  */
 function ajax_nodeloader_admin() {
   $form = array();
@@ -37,7 +37,7 @@ function ajax_nodeloader_admin() {
 }
 
 /**
- * Implements hook_menu()
+ * Implements hook_menu().
  */
 function ajax_nodeloader_menu() {
   $items = array();
@@ -73,8 +73,7 @@ function ajax_nodeloader_menu() {
 }
 
 /**
- * Use %wildcard_load to get dynamically
- * separated parts imploded into one string
+ * Use %wildcard_load to get dynamically separated parts imploded into one string.
  *   @see http://drupal.org/node/109153
  *   @see http://api.drupal.org/api/drupal/includes!menu.inc/function/menu_tail_to_arg/6
  */
@@ -83,7 +82,7 @@ function ajax_nodeloader_url_load($arg, $map, $index) {
 }
 
 /**
- * Implements of ajax_nodeloader_load_node()
+ * Implements of ajax_nodeloader_load_node().
  *
  * @nid
  *   Numeric node id or path alias
