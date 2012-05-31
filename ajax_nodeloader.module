@@ -14,9 +14,12 @@ function ajax_nodeloader_init() {
   drupal_add_css(drupal_get_path('module', 'ajax_nodeloader') . '/css/ajax_nodeloader.css');
   drupal_add_js(drupal_get_path('module', 'ajax_nodeloader') . '/js/ajax_nodeloader.js');
 
-  // Add Google analytics tracking settins to Drupal.settings javascript.
+  // Module options to Drupal.settings javascript.
+  // Google analytics tracking.
+  // AJAX loader image delay.
   $options = array();
   $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking', 1) == 1 ? TRUE : FALSE;
+  $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
   drupal_add_js(array('ajax_nodeloader' => $options), 'setting');
 }
 
@@ -31,6 +34,13 @@ function ajax_nodeloader_admin() {
     '#title' => t('Track with Google Analytics'),
     '#default_value' => variable_get('ajax_nodeloader_use_google_tracking', 1),
     '#description' => t("Use Google Analytics for tracking ajax-loaded links (you must have Google Analytics code installed)"),
+  );
+
+  $form['ajax_nodeloader_loader_image_delay'] = array(
+    '#type' => 'textfield',
+    '#title' => t('AJAX loader image delay (milliseconds)'),
+    '#default_value' => variable_get('ajax_nodeloader_loader_image_delay', 0),
+    '#description' => t("Use delay to avoid loader image blink on fast connections."),
   );
 
   return system_settings_form($form);
@@ -120,7 +130,7 @@ function ajax_nodeloader_load_node($encoded_url) {
   // Unfortunally, we need to use pure json_encode instead
   // drupal_to_js function to prevent wrong utf-8 json encoding
   // @see http://drupal.org/node/1086098
-  // TODO json_encode for php < 5.2
+  // TODO: json_encode for php < 5.2
   $result = json_encode($output);
   drupal_set_header('Content-Type: text/javascript; charset=utf-8');
   echo $result;
