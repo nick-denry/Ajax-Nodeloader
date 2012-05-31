@@ -52,27 +52,27 @@
       nodeloader_load(full_link,$('a[href="'+full_link+'"]').attr('rel'));
     }
 
-    //function to load page
+    // Function to load page.
     function nodeloader_load(full_link,link_attr) {
-      //Display loader image
+      // Display loader image.
       $('#nodeloader-ajax-image').css('display','block');
 
-      //Remove slash
+      // Remove slash.
       var link_href = full_link.substr(1);
 
-      //Make ajax call to module
+      // Make ajax call to module.
       $.ajax({
         type: 'GET',
         url: '/node_load/'+link_href,
         success: function(data) {
-          //Process json answer
-          //eval('(' + data + ')');
+          // Process json answer.
+          // eval('(' + data + ')');
           var node = jQuery.parseJSON(data);
 
-          //Set .home class for #page-title header
+          // Set .home class for #page-title header.
           $('#page-title').toggleClass('home',link_attr == 'home');
 
-          //Set up content to targets or default places
+          // Set up content to targets or default places.
           var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze h2',
           body:'div.node > div.content'});
 
@@ -92,33 +92,33 @@
               // Do nothing
           }
 
-          // Set up values
-          // Title
+          // Set up values.
+          // Title.
           $(ajaxNodeloaderDisplay.title).html(node.title);
-          // And body
+          // And body.
           $(ajaxNodeloaderDisplay.body).html(node.body);
-          // Attach Drupal behaviors
+          // Attach Drupal behaviors.
           Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
 
-          //Hide liader image
+          // Hide loader image.
           $('#nodeloader-ajax-image').css('display','none');
 
-          // Set up drupal links for tabs Display and Edit
-          // now simply via links order
+          // Set up drupal links for tabs Display and Edit.
+          // now simply via links order.
           if ($('ul.tabs.primary').length > 0) {
             $($('ul.tabs.primary > li').children()[0]).attr('href', full_link);
             $($('ul.tabs.primary > li').children()[1]).attr('href', '/node/'+node.nid+'/edit');
           }
 
-          // Change hash for user
+          // Change hash for user.
           window.location.hash = full_link;
 
-          // Set up .active class for current links
+          // Set up .active class for current links.
           $('a').removeClass('active');
           $('a[href="'+full_link+'"]').addClass('active');
 
 
-          // Bind dynamically adding links click event
+          // Bind dynamically adding links click event.
           if ($('a.nodeloader').length > 0) {
             $('a.nodeloader').die('click').live('click',nodeloader_click);
           }
@@ -140,10 +140,10 @@
 
     function nodeloader_click() {
 
-      // Store current link for ajax call while detecting home
+      // Store current link for ajax call while detecting home.
       var current_link = $(this);
 
-      // Unfortunally, we need to override default explorer 7.0 behaviour
+      // Unfortunally, we need to override default explorer 7.0 behaviour.
       // see:
       // @link: http://stackoverflow.com/questions/7793728/get-a-relative-path-with-jquery-attr-property-with-ie7
       if (($.browser.msie) && ($.browser.version == '7.0')) {
@@ -153,7 +153,7 @@
         var full_link = $(this).attr('href');
       }
 
-      //load node
+      // Load node.
       nodeloader_load(full_link,current_link.attr('rel'));
 
       // We don't really want default click
@@ -161,7 +161,7 @@
     }
 
 
-    // Delagate ajax loader to a.nodeloader links
+    // Delagate ajax loader to a.nodeloader links.
     if ($('a.nodeloader').length > 0) {
       $('a.nodeloader').die('click').live('click',nodeloader_click);
     }
