@@ -73,7 +73,7 @@
           $('#page-title').toggleClass('home',link_attr == 'home');
 
           // Set up content to targets or default places.
-          var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze h2',
+          var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze > h2',
           body:'div.node > div.content'});
 
           try {
