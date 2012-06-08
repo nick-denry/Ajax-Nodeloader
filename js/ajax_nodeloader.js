@@ -44,7 +44,7 @@
   // Original JavaScript code.
   $(document).ready(function() {
     //Append nodeloader ajax image
-    $('body').append('<div id="nodeloader-ajax-image">&nbsp;</div>');
+    $('body').append('<div id="ajax-nodeloader-image">&nbsp;</div>');
 
     //try to load hashtag page
     if (window.location.hash != '') {
@@ -55,7 +55,7 @@
     // Function to load page.
     function nodeloader_load(full_link,link_attr) {
       // Display loader image.
-      $('#nodeloader-ajax-image').css('display','block');
+      $('#ajax-nodeloader-image').css('display','block');
 
       // Remove slash.
       var link_href = full_link.substr(1);
@@ -133,10 +133,10 @@
           // Hide loader image.
           if (Drupal.settings.ajax_nodeloader.ajax_loader_delay != 0) {
             setTimeout(function() {
-              $('#nodeloader-ajax-image').css('display','none');
+              $('#ajax-nodeloader-image').css('display','none');
             },Drupal.settings.ajax_nodeloader.ajax_loader_delay);
           } else {
-            $('#nodeloader-ajax-image').css('display','none');
+            $('#ajax-nodeloader-image').css('display','none');
           }
         },
         dataType: 'ajax'
