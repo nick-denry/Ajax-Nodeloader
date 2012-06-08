@@ -20,6 +20,8 @@ function ajax_nodeloader_init() {
   $options = array();
   $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking') == 1 ? TRUE : FALSE;
   $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
+  $options['display_title'] = variable_get('ajax_nodeloader_display_title', '#page-title');
+  $options['display_content'] = variable_get('ajax_nodeloader_loader_image_delay', 'div.node > div.content');
 
   drupal_add_js(array('ajax_nodeloader' => $options), 'setting');
 }
@@ -42,6 +44,20 @@ function ajax_nodeloader_admin() {
     '#title' => t('AJAX loader image delay (milliseconds)'),
     '#default_value' => variable_get('ajax_nodeloader_loader_image_delay', 0),
     '#description' => t("Use delay to avoid loader image blink on fast connections."),
+  );
+
+  $form['ajax_nodeloader_display_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Set default css selector where display your title'),
+    '#default_value' => variable_get('ajax_nodeloader_loader_image_delay', '#page-title'),
+    '#description' => t("Default is '#page-title'. You still can override it via rel attribute for single link."),
+  );
+
+  $form['ajax_nodeloader_display_content'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Set default css selector where display your content'),
+    '#default_value' => variable_get('ajax_nodeloader_loader_image_delay', 'div.node > div.content'),
+    '#description' => t("Default is 'div.node > div.content'. You still can override it via rel attribute for single link."),
   );
 
   return system_settings_form($form);
