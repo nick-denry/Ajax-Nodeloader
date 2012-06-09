@@ -4,3 +4,5 @@ package = Other
 core = 7.x
 
 dependencies[] = path
+
+configure = admin/config/system/ajax_nodeloader
