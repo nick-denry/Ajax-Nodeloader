@@ -76,6 +76,12 @@
           var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze > h2',
           body:'div.node > div.content'});
 
+          // If set, get default css targets from Drupal settings.
+          if (Drupal.settings.ajax_nodeloader) {
+            ajaxNodeloaderDisplay.title = Drupal.settings.ajax_nodeloader.display_title;
+            ajaxNodeloaderDisplay.content = Drupal.settings.ajax_nodeloader.display_content;
+          }
+
           try {
             var content_target = jQuery.parseJSON(link_attr.replace(/\'/g,'"'));
 
