@@ -15,8 +15,9 @@
       // Display loader image.
       $('#ajax-nodeloader-image').css('display','block');
       // Get clean "some.html" or node number.
-      var link_href = full_link.substr(1);
-      var link_prefix = Drupal.settings.pathPrefix == ""?"/":Drupal.settings.pathPrefix;
+      var link_href = full_link.substr(1).replace(Drupal.settings.pathPrefix,'');
+      // Create link prefix starts from slash.
+      var link_prefix = '/'+Drupal.settings.pathPrefix;
       // Make ajax call to module.
       $.ajax({
         type: 'GET',
