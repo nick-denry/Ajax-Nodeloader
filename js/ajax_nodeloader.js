@@ -1,7 +1,7 @@
 (function ($) {
   // Original JavaScript code.
   $(document).ready(function() {
-    //Append nodeloader ajax image
+    // Append nodeloader ajax image.
     $('body').append('<div id="ajax-nodeloader-image">&nbsp;</div>');
 
     // Try to load hashtag page.
