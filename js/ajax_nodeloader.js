@@ -74,7 +74,7 @@
 
           // Set up content to targets or default places.
           var ajaxNodeloaderDisplay = new Object ({title:'div#squeeze > h2',
-          body:'div.node > div.content'});
+          content:'div.node > div.content'});
 
           // If set, get default css targets from Drupal settings.
           if (Drupal.settings.ajax_nodeloader) {
@@ -92,7 +92,7 @@
 
             // Try to set up custom body
             if ('body' in content_target) {
-              ajaxNodeloaderDisplay.body = content_target.body;
+              ajaxNodeloaderDisplay.content = content_target.body;
             }
           } catch(e) {
               // Do nothing
@@ -102,9 +102,9 @@
           // Title.
           $(ajaxNodeloaderDisplay.title).html(node.title);
           // And body.
-          $(ajaxNodeloaderDisplay.body).html(node.body);
+          $(ajaxNodeloaderDisplay.content).html(node.body);
           // Attach Drupal behaviors.
-          Drupal.attachBehaviors(ajaxNodeloaderDisplay.body);
+          Drupal.attachBehaviors(ajaxNodeloaderDisplay.content);
 
           // Set up drupal links for tabs Display and Edit.
           // now simply via links order.
