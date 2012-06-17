@@ -1,3 +1,10 @@
+Ajax Nodeloader 0.6, 2012-06-17
+------------------------
+- Rename branch to 6.x-1.x after get RTBC status.
+- Add default css selectors changing via admin panel.
+- Add timeout interval between show and hide loader image (admin).
+- Change order oh hiding and showing loader image.
+
 Ajax Nodeloader 0.5, 2012-05-13
 ------------------------
 - Don't display empty or hidden node fields.
