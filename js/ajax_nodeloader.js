@@ -16,7 +16,8 @@
       $('#ajax-nodeloader-image').css('display','block');
       // Get clean "some.html" or node number.
       var link_href = full_link.substr(1).replace(Drupal.settings.pathPrefix,'');
-
+      // Create link prefix starts from slash.
+      var link_prefix = '/'+Drupal.settings.pathPrefix;
       // If we're using non-clean urls,
       // parse get params and use q as loaded url.
       // TODO: Test with multilanguage sites.
@@ -30,9 +31,9 @@
         }
         // Set q as request URL.
         link_href = get_params.q;
+        link_prefix = '?q=';
       }
-      // Create link prefix starts from slash.
-      var link_prefix = '/'+Drupal.settings.pathPrefix;
+
       // Make ajax call to module.
       $.ajax({
         type: 'GET',
