@@ -46,7 +46,7 @@
     //Append nodeloader ajax image
     $('body').append('<div id="ajax-nodeloader-image">&nbsp;</div>');
 
-    //try to load hashtag page
+    // Try to load hashtag page.
     if (window.location.hash != '') {
       var full_link = window.location.hash.substr(1);
       nodeloader_load(full_link,$('a[href="'+full_link+'"]').attr('rel'));
@@ -85,17 +85,17 @@
           try {
             var content_target = jQuery.parseJSON(link_attr.replace(/\'/g,'"'));
 
-            // Try to set up custom title
+            // Try to set up custom title.
             if ('title' in content_target) {
               ajaxNodeloaderDisplay.title = content_target.title;
             }
 
-            // Try to set up custom body
+            // Try to set up custom body.
             if ('body' in content_target) {
               ajaxNodeloaderDisplay.content = content_target.body;
             }
           } catch(e) {
-              // Do nothing
+              // Do nothing.
           }
 
           // Set up values.
