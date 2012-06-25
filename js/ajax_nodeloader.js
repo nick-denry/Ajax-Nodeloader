@@ -21,7 +21,7 @@
       // Make ajax call to module.
       $.ajax({
         type: 'GET',
-        url: link_prefix+'node_load/'+link_href,
+        url: link_prefix+'ajax_nodeloader/'+link_href,
         success: function(data) {
           // Process json answer.
           // eval('(' + data + ')');
