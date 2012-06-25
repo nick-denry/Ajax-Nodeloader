@@ -69,7 +69,7 @@ function ajax_nodeloader_admin() {
 function ajax_nodeloader_menu() {
   $items = array();
 
-  $items['node_load/%ajax_nodeloader_url'] = array(
+  $items['ajax_nodeloader/%ajax_nodeloader_url'] = array(
     'title' => 'load node via alias',
     'page callback' => 'ajax_nodeloader_load_node',
     'page arguments' => array(1),
@@ -78,7 +78,7 @@ function ajax_nodeloader_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['node_load/node/%ajax_nodeloader_url'] = array(
+  $items['ajax_nodeloader/node/%ajax_nodeloader_url'] = array(
     'title' => 'load node',
     'page callback' => 'ajax_nodeloader_load_node',
     'page arguments' => array(2),
