@@ -121,7 +121,7 @@ function ajax_nodeloader_load_node($encoded_url) {
 
   if (!is_numeric($encoded_url)) {
     $system_path = drupal_lookup_path('source', $encoded_url);
-    $path = split('/', $system_path);
+    $path = explode('/', $system_path);
     $nid = $path[1];
   }
   else {
