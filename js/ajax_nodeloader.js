@@ -59,11 +59,27 @@
 
       // Remove slash.
       var link_href = full_link.substr(1);
+      var link_prefix = '/';
+
+      // If we're using non-clean urls,
+      // parse get params and use q as loaded url.
+      if (link_href.indexOf('?q=') != -1) {
+        var get_params_string = link_href.split('?',2)[1];
+        var get_params_list = get_params_string.split('&');
+        var get_params = {};
+        for ( var i = 0; i < get_params_list.length; i++) {
+          var get_parameter = get_params_list[i].split("=");
+          get_params[get_parameter[0]] = get_parameter[1];
+        }
+        // Set q as request URL.
+        link_href = get_params.q;
+        link_prefix += '?q=';
+      }
 
       // Make ajax call to module.
       $.ajax({
         type: 'GET',
-        url: '/ajax_nodeloader/'+link_href,
+        url: link_prefix+'ajax_nodeloader/'+link_href,
         success: function(data) {
           // Process json answer.
           // eval('(' + data + ')');
