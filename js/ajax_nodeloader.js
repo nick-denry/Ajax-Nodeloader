@@ -25,7 +25,7 @@
         var get_params_string = link_href.split('?',2)[1];
         var get_params_list = get_params_string.split('&');
         var get_params = {};
-        for ( var i = 0; i < get_params_list.length; i++) {
+        for (var i = 0; i < get_params_list.length; i++) {
           var get_parameter = get_params_list[i].split("=");
           get_params[get_parameter[0]] = get_parameter[1];
         }

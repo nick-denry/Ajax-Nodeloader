@@ -134,7 +134,7 @@ function ajax_nodeloader_load_node($encoded_url) {
   }
 
   if ($node) {
-    if ($node->status == 1 || ($node->status == 0 && (user_access('view unpublished '. $node->type .' content') || user_access('view all unpublished content')))) {
+    if ($node->status == 1 || ($node->status == 0 && (user_access('view unpublished ' . $node->type . ' content') || user_access('view all unpublished content')))) {
       $node_info = array();
 
       // Set node id.
@@ -158,7 +158,8 @@ function ajax_nodeloader_load_node($encoded_url) {
       }
 
       $output = $node_info;
-    } else {
+    }
+    else {
       $output['fields']['body'] = t('Access denied');
     }
   }
