@@ -133,17 +133,23 @@ function ajax_nodeloader_load_node($encoded_url) {
   }
 
   if ($node) {
-    $node_info = array();
-    $node_info['title'] = $node->title;
-    // Get body filed value.
-    // $body_field = field_get_items('node', $node, 'body', $node->language);
-    // render(field_view_value('node', $node, 'body', $body_field[$delta]));
-    $node_info['body'] = $node->body;
 
-    $node_info['nid'] = $nid;
-    $output = $node_info;
+    if ($node->status == 1 || ($node->status == 0 && (user_access('view unpublished '. $node->type .' content') || user_access('view all unpublished content')))) {
+
+      $node_info = array();
+      $node_info['title'] = $node->title;
+      // Get body filed value.
+      // $body_field = field_get_items('node', $node, 'body', $node->language);
+      // render(field_view_value('node', $node, 'body', $body_field[$delta]));
+      $node_info['body'] = $node->body;
+
+      $node_info['nid'] = $nid;
+      $output = $node_info;
+    }
+    else {
+      $output['body'] = t('Access denied');
+    }
   }
-
   // Unfortunally, we need to use pure json_encode instead
   // drupal_to_js function to prevent wrong utf-8 json encoding
   // @see http://drupal.org/node/1086098
