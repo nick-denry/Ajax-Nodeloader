@@ -134,7 +134,10 @@ function ajax_nodeloader_load_node($encoded_url) {
   }
 
   if ($node) {
-    if ($node->status == 1 || ($node->status == 0 && (user_access('view unpublished ' . $node->type . ' content') || user_access('view all unpublished content')))) {
+
+    // Check if user has "bypass node access" permission first.
+    // See http://api.drupal.org/api/drupal/modules!node!node.module/group/node_access/7
+    if (node_access('view',$node)) {
       $node_info = array();
 
       // Set node id.
