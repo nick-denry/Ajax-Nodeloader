@@ -5,10 +5,15 @@
     $('body').append('<div id="ajax-nodeloader-image">&nbsp;</div>');
 
     // Try to load hashtag page.
-    if (window.location.hash != '') {
-      var full_link = window.location.hash.substr(1);
-      nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
-    }
+    // Advanced hashtag navigation,
+    // (with forward and back browsers button support).
+    // TODO: Also add HTML 5 history support there.
+    setInterval(function() {
+      if (window.location.hash !== '' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
+        var full_link = window.location.hash.substr(1);
+        nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
+      }
+    },500);
 
     // Function to load page.
     function nodeloader_load(full_link, link_attr) {
@@ -102,6 +107,9 @@
 
           // Change hash for user.
           window.location.hash = full_link;
+          // Store previous hash for advanced hashtag navigation.
+          // TODO: Add HTML5 History navigation for browsers that support it.
+          Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
 
           // Set up .active class for current links.
           $('a').removeClass('active');
