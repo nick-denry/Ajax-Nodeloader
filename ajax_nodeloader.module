@@ -134,7 +134,7 @@ function ajax_nodeloader_load_node($encoded_url) {
 
   if ($node) {
 
-    if ($node->status == 1 || ($node->status == 0 && (user_access('view unpublished ' . $node->type . ' content') || user_access('view all unpublished content')))) {
+    if (node_access('view',$node)) {
 
       $node_info = array();
       $node_info['title'] = $node->title;
