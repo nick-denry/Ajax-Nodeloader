@@ -22,7 +22,7 @@ function ajax_nodeloader_init() {
   $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
   $options['display_title'] = variable_get('ajax_nodeloader_display_title', '#page-title');
   $options['display_content'] = variable_get('ajax_nodeloader_display_content', 'div.node > div.content');
-  $options['front_page'] = variable_get('site_frontpage', 'node/1');
+  $options['front_page'] = '/' . variable_get('site_frontpage', 'node/1');
 
   drupal_add_js(array('ajax_nodeloader' => $options), 'setting');
 }
