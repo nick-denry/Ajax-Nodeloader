@@ -136,7 +136,6 @@
               // Change hash for user.
               window.location.hash = full_link;
               // Store previous hash for advanced hashtag navigation.
-              // TODO: Add HTML5 History navigation for browsers that support it.
               Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
             }
             else {
