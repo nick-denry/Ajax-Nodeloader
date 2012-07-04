@@ -9,12 +9,13 @@
     // (with forward and back browsers button support).
     // Added support for loading site front page node.
     // TODO: Also add HTML 5 history support there.
+    // TODO: Replace setInterval with setTimeot with callback of nodeloader_load.
     setInterval(function() {
       if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
         var full_link = window.location.hash == '' ? Drupal.settings.ajax_nodeloader.front_page : window.location.hash.substr(1);
         nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
       }
-    },500);
+    },1000);
 
     // Function to load page.
     function nodeloader_load(full_link, link_attr) {
@@ -106,11 +107,17 @@
             });
           }
 
-          // Change hash for user.
-          window.location.hash = full_link;
-          // Store previous hash for advanced hashtag navigation.
-          // TODO: Add HTML5 History navigation for browsers that support it.
-          Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+          if (full_link != Drupal.settings.ajax_nodeloader.front_page) {
+            // Change hash for user.
+            window.location.hash = full_link;
+            // Store previous hash for advanced hashtag navigation.
+            // TODO: Add HTML5 History navigation for browsers that support it.
+            Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+          }
+          else {
+            // Clean previous hashtag for main page.
+            Drupal.settings.ajax_nodeloader.prev_hash = '';
+          }
 
           // Set up .active class for current links.
           $('a').removeClass('active');
