@@ -4,11 +4,9 @@
     // Append nodeloader ajax image.
     $('body').append('<div id="ajax-nodeloader-image">&nbsp;</div>');
 
-    // Try to load hashtag page.
-    // Advanced hashtag navigation,
-    // (with forward and back browsers button support).
-    // Added support for loading site front page node.
-    // TODO: Also add HTML 5 history support there.
+    // HTML 5 History support.
+    // We'll use hashtag navigation for obsolete browsers,
+    // that don't support HTML5 History API.
 
     if (!!(window.history && history.pushState)) {
       $(window).bind('popstate',function(event){
@@ -127,8 +125,9 @@
 
           if (!!(window.history && history.pushState)) {
             if ((window.history.state == null) || (window.history.state.path !== full_link)) {
-              console.log(full_link);
-              console.log(window.history.state);
+              if (full_link == Drupal.settings.ajax_nodeloader.front_page) {
+                full_link = '/';
+              }
               history.pushState({path: full_link}, '', full_link);
             }
           }
