@@ -10,6 +10,8 @@
     // Added support for loading site front page node.
     // TODO: Also add HTML 5 history support there.
     // TODO: Replace setInterval with setTimeot with callback of nodeloader_load.
+    Drupal.settings.ajax_nodeloader.prev_hash = '';
+
     setInterval(function() {
       if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
         if (window.location.hash == '') {
