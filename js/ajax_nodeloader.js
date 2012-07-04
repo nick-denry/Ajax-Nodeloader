@@ -9,22 +9,31 @@
     // (with forward and back browsers button support).
     // Added support for loading site front page node.
     // TODO: Also add HTML 5 history support there.
-    // TODO: Replace setInterval with setTimeot with callback of nodeloader_load.
-    Drupal.settings.ajax_nodeloader.prev_hash = '';
 
-    setInterval(function() {
-      if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
-        if (window.location.hash == '') {
-          var full_link = window.location.pathname == '/'?Drupal.settings.ajax_nodeloader.front_page:window.location.pathname;
-        }
-        else {
-          var full_link = window.location.hash.substr(1);
-        }
-        Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
-
+    if (!!(window.history && history.pushState)) {
+      $(window).bind('popstate',function(event){
+        full_link = window.location.pathname;
         nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
-      }
-    },1000);
+      });
+    }
+    else {
+      // Hashtag navigation for browsers that don't support HTMLL5 History API.
+      Drupal.settings.ajax_nodeloader.prev_hash = '';
+
+      setInterval(function() {
+        if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
+          if (window.location.hash == '') {
+            var full_link = window.location.pathname == '/'?Drupal.settings.ajax_nodeloader.front_page:window.location.pathname;
+          }
+          else {
+            var full_link = window.location.hash.substr(1);
+          }
+          Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+
+          nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
+        }
+      },1000);
+    }
 
     // Function to load page.
     function nodeloader_load(full_link, link_attr) {
@@ -116,16 +125,25 @@
             });
           }
 
-          if (full_link != Drupal.settings.ajax_nodeloader.front_page) {
-            // Change hash for user.
-            window.location.hash = full_link;
-            // Store previous hash for advanced hashtag navigation.
-            // TODO: Add HTML5 History navigation for browsers that support it.
-            Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+          if (!!(window.history && history.pushState)) {
+            if ((window.history.state == null) || (window.history.state.path !== full_link)) {
+              console.log(full_link);
+              console.log(window.history.state);
+              history.pushState({path: full_link}, '', full_link);
+            }
           }
           else {
-            // Clean previous hashtag for main page.
-            Drupal.settings.ajax_nodeloader.prev_hash = '';
+            if (full_link != Drupal.settings.ajax_nodeloader.front_page) {
+              // Change hash for user.
+              window.location.hash = full_link;
+              // Store previous hash for advanced hashtag navigation.
+              // TODO: Add HTML5 History navigation for browsers that support it.
+              Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+            }
+            else {
+              // Clean previous hashtag for main page.
+              Drupal.settings.ajax_nodeloader.prev_hash = '';
+            }
           }
 
           // Set up .active class for current links.
