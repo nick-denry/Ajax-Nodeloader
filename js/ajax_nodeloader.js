@@ -12,7 +12,7 @@
 
     if (!!(window.history && history.pushState)) {
       $(window).bind('popstate',function(event){
-        full_link = window.location.pathname;
+        full_link = window.location.pathname == '/' ? Drupal.settings.ajax_nodeloader.front_page : window.location.pathname;
         nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
       });
     }
