@@ -21,11 +21,11 @@ function ajax_nodeloader_init() {
   $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
   $options['display_title'] = variable_get('ajax_nodeloader_display_title', 'div#squeeze > h2');
   $options['display_content'] = variable_get('ajax_nodeloader_display_content', 'div.node > div.content');
-  $options['set_title'] = variable_get('ajax_nodeloader_set_document_title') == 1 ? TRUE : FALSE;
-  $options['advanced_navigation'] = variable_get('ajax_nodeloader_use_advanced_navigation') == 1 ? TRUE : FALSE;
-  $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking') == 1 ? TRUE : FALSE;
+  $options['set_title'] = variable_get('ajax_nodeloader_set_document_title',0) == 1 ? TRUE : FALSE;
+  $options['advanced_navigation'] = variable_get('ajax_nodeloader_use_advanced_navigation',1) == 1 ? TRUE : FALSE;
+  $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking',1) == 1 ? TRUE : FALSE;
   $options['site']['front_page'] = '/' . variable_get('site_frontpage', 'node/1');
-  $options['site']['name'] = variable_get('site_name');
+  $options['site']['name'] = variable_get('site_name', 'Default site name');
 
   drupal_add_js(array('ajax_nodeloader' => $options), 'setting');
 }
