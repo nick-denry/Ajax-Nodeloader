@@ -10,7 +10,7 @@
 
     if (!!(window.history && history.pushState)) {
       $(window).bind('popstate',function(event){
-        full_link = window.location.pathname == '/' ? Drupal.settings.ajax_nodeloader.front_page : window.location.pathname;
+        full_link = window.location.pathname == '/' ? Drupal.settings.ajax_nodeloader.site.front_page : window.location.pathname;
         nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
       });
     }
@@ -21,7 +21,7 @@
       setInterval(function() {
         if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
           if (window.location.hash == '') {
-            var full_link = window.location.pathname == '/'?Drupal.settings.ajax_nodeloader.front_page:window.location.pathname;
+            var full_link = window.location.pathname == '/'?Drupal.settings.ajax_nodeloader.site.front_page:window.location.pathname;
           }
           else {
             var full_link = window.location.hash.substr(1);
@@ -125,14 +125,14 @@
 
           if (!!(window.history && history.pushState)) {
             if ((window.history.state == null) || (window.history.state.path !== full_link)) {
-              if (full_link == Drupal.settings.ajax_nodeloader.front_page) {
+              if (full_link == Drupal.settings.ajax_nodeloader.site.front_page) {
                 full_link = '/';
               }
               history.pushState({path: full_link}, '', full_link);
             }
           }
           else {
-            if (full_link != Drupal.settings.ajax_nodeloader.front_page) {
+            if (full_link != Drupal.settings.ajax_nodeloader.site.front_page) {
               // Change hash for user.
               window.location.hash = full_link;
               // Store previous hash for advanced hashtag navigation.
