@@ -4,33 +4,36 @@
     // Append nodeloader ajax image.
     $('body').append('<div id="ajax-nodeloader-image">&nbsp;</div>');
 
+    // If enabled, use advanced navigation.
     // HTML 5 History support.
     // We'll use hashtag navigation for obsolete browsers,
     // that don't support HTML5 History API.
 
-    if (!!(window.history && history.pushState)) {
-      $(window).bind('popstate',function(event){
-        full_link = window.location.pathname == '/' ? Drupal.settings.ajax_nodeloader.site.front_page : window.location.pathname;
-        nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
-      });
-    }
-    else {
-      // Hashtag navigation for browsers that don't support HTMLL5 History API.
-      Drupal.settings.ajax_nodeloader.prev_hash = '';
-
-      setInterval(function() {
-        if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
-          if (window.location.hash == '') {
-            var full_link = window.location.pathname == '/'?Drupal.settings.ajax_nodeloader.site.front_page:window.location.pathname;
-          }
-          else {
-            var full_link = window.location.hash.substr(1);
-          }
-          Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
-
+    if (Drupal.settings.ajax_nodeloader.advanced_navigation) {
+      if (!!(window.history && history.pushState)) {
+        $(window).bind('popstate',function(event){
+          full_link = window.location.pathname == '/' ? Drupal.settings.ajax_nodeloader.site.front_page : window.location.pathname;
           nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
-        }
-      },1000);
+        });
+      }
+      else {
+        // Hashtag navigation for browsers that don't support HTMLL5 History API.
+        Drupal.settings.ajax_nodeloader.prev_hash = '';
+
+        setInterval(function() {
+          if (typeof(Drupal.settings.ajax_nodeloader.prev_hash) !== 'undefined' && window.location.hash !== Drupal.settings.ajax_nodeloader.prev_hash) {
+            if (window.location.hash == '') {
+              var full_link = window.location.pathname == '/'?Drupal.settings.ajax_nodeloader.site.front_page:window.location.pathname;
+            }
+            else {
+              var full_link = window.location.hash.substr(1);
+            }
+            Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+
+            nodeloader_load(full_link, $('a[href="'+full_link+'"]').attr('rel'));
+          }
+        },1000);
+      }
     }
 
     // Function to load page.
@@ -128,24 +131,28 @@
             });
           }
 
-          if (!!(window.history && history.pushState)) {
-            if ((window.history.state == null) || (window.history.state.path !== full_link)) {
-              if (full_link == Drupal.settings.ajax_nodeloader.site.front_page) {
-                full_link = '/';
+
+          // If enabled, use advanced navigation.
+          if (Drupal.settings.ajax_nodeloader.advanced_navigation) {
+            if (!!(window.history && history.pushState)) {
+              if ((window.history.state == null) || (window.history.state.path !== full_link)) {
+                if (full_link == Drupal.settings.ajax_nodeloader.site.front_page) {
+                  full_link = '/';
+                }
+                history.pushState({path: full_link}, '', full_link);
               }
-              history.pushState({path: full_link}, '', full_link);
-            }
-          }
-          else {
-            if (full_link != Drupal.settings.ajax_nodeloader.site.front_page) {
-              // Change hash for user.
-              window.location.hash = full_link;
-              // Store previous hash for advanced hashtag navigation.
-              Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
             }
             else {
-              // Clean previous hashtag for main page.
-              Drupal.settings.ajax_nodeloader.prev_hash = '';
+              if (full_link != Drupal.settings.ajax_nodeloader.site.front_page) {
+                // Change hash for user.
+                window.location.hash = full_link;
+                // Store previous hash for advanced hashtag navigation.
+                Drupal.settings.ajax_nodeloader.prev_hash = window.location.hash;
+              }
+              else {
+                // Clean previous hashtag for main page.
+                Drupal.settings.ajax_nodeloader.prev_hash = '';
+              }
             }
           }
 

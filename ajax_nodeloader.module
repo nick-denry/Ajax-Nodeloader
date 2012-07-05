@@ -18,11 +18,12 @@ function ajax_nodeloader_init() {
   // Google analytics tracking.
   // AJAX loader image delay.
   $options = array();
-  $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking') == 1 ? TRUE : FALSE;
   $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
   $options['display_title'] = variable_get('ajax_nodeloader_display_title', '#page-title');
   $options['display_content'] = variable_get('ajax_nodeloader_display_content', 'div.node > div.content');
   $options['set_title'] = variable_get('ajax_nodeloader_set_document_title') == 1 ? TRUE : FALSE;
+  $options['advanced_navigation'] = variable_get('ajax_nodeloader_use_advanced_navigation') == 1 ? TRUE : FALSE;
+  $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking') == 1 ? TRUE : FALSE;
   $options['site']['front_page'] = '/' . variable_get('site_frontpage', 'node/1');
   $options['site']['name'] = variable_get('site_name');
 
@@ -54,6 +55,13 @@ function ajax_nodeloader_admin() {
     '#title' => t('Set default css selector where display your content'),
     '#default_value' => variable_get('ajax_nodeloader_display_content', 'div.node > div.content'),
     '#description' => t("Default is 'div.node > div.content'. You still can override it via rel attribute for single link."),
+  );
+
+  $form['ajax_nodeloader_use_advanced_navigation'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use HTML5 History or hashtag navigation'),
+    '#default_value' => variable_get('ajax_nodeloader_use_advanced_navigation', 1),
+    '#description' => t("Use HTML 5 History API or hashtag (old browsers) advanced navigation with back and forward browser buttons and allow users share your AJAXified links"),
   );
 
   $form['ajax_nodeloader_set_document_title'] = array(
