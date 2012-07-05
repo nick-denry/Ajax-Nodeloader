@@ -79,6 +79,11 @@
             ajaxNodeloaderDisplay.content = Drupal.settings.ajax_nodeloader.display_content;
           }
 
+          // Set document title, if enabled.
+          if (Drupal.settings.ajax_nodeloader.set_title) {
+            document.title = node.title + ' | ' + Drupal.settings.ajax_nodeloader.site.name;
+          }
+
           try {
             var content_targets = jQuery.parseJSON(link_attr.replace(/\'/g, '"'));
 
