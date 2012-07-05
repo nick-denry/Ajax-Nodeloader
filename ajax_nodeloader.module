@@ -59,7 +59,7 @@ function ajax_nodeloader_admin() {
 
   $form['ajax_nodeloader_use_advanced_navigation'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Use HTML5 History or hashtag navigation'),
+    '#title' => t('Use advanced navigation'),
     '#default_value' => variable_get('ajax_nodeloader_use_advanced_navigation', 1),
     '#description' => t("Use HTML 5 History API or hashtag (old browsers) advanced navigation with back and forward browser buttons and allow users share your AJAXified links"),
   );
