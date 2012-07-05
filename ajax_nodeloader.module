@@ -18,10 +18,14 @@ function ajax_nodeloader_init() {
   // Google analytics tracking.
   // AJAX loader image delay.
   $options = array();
-  $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking', 1) == 1 ? TRUE : FALSE;
   $options['ajax_loader_delay'] = variable_get('ajax_nodeloader_loader_image_delay', 0);
   $options['display_title'] = variable_get('ajax_nodeloader_display_title', 'div#squeeze > h2');
   $options['display_content'] = variable_get('ajax_nodeloader_display_content', 'div.node > div.content');
+  $options['set_title'] = variable_get('ajax_nodeloader_set_document_title') == 1 ? TRUE : FALSE;
+  $options['advanced_navigation'] = variable_get('ajax_nodeloader_use_advanced_navigation') == 1 ? TRUE : FALSE;
+  $options['use_google_tracking'] = variable_get('ajax_nodeloader_use_google_tracking') == 1 ? TRUE : FALSE;
+  $options['site']['front_page'] = '/' . variable_get('site_frontpage', 'node/1');
+  $options['site']['name'] = variable_get('site_name');
 
   drupal_add_js(array('ajax_nodeloader' => $options), 'setting');
 }
@@ -31,13 +35,6 @@ function ajax_nodeloader_init() {
  */
 function ajax_nodeloader_admin() {
   $form = array();
-
-  $form['ajax_nodeloader_use_google_tracking'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Track with Google Analytics'),
-    '#default_value' => variable_get('ajax_nodeloader_use_google_tracking', 1),
-    '#description' => t("Use Google Analytics for tracking ajax-loaded links (you must have Google Analytics code installed)"),
-  );
 
   $form['ajax_nodeloader_loader_image_delay'] = array(
     '#type' => 'textfield',
@@ -58,6 +55,27 @@ function ajax_nodeloader_admin() {
     '#title' => t('Set default css selector where display your content'),
     '#default_value' => variable_get('ajax_nodeloader_display_content', 'div.node > div.content'),
     '#description' => t("Default is 'div.node > div.content'. You still can override it via rel attribute for single link."),
+  );
+
+  $form['ajax_nodeloader_use_advanced_navigation'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use advanced navigation'),
+    '#default_value' => variable_get('ajax_nodeloader_use_advanced_navigation', 1),
+    '#description' => t("Use HTML 5 History API or hashtag (old browsers) advanced navigation with back and forward browser buttons and allow users share your AJAXified links"),
+  );
+
+  $form['ajax_nodeloader_set_document_title'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dynamically set browser title'),
+    '#default_value' => variable_get('ajax_nodeloader_set_document_title', 0),
+    '#description' => t("Set browser window title using format \"Node title | Sitename\""),
+  );
+
+  $form['ajax_nodeloader_use_google_tracking'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track with Google Analytics'),
+    '#default_value' => variable_get('ajax_nodeloader_use_google_tracking', 1),
+    '#description' => t("Use Google Analytics for tracking ajax-loaded links (you must have Google Analytics code installed)"),
   );
 
   return system_settings_form($form);
@@ -120,7 +138,7 @@ function ajax_nodeloader_load_node($encoded_url) {
 
   if (!is_numeric($encoded_url)) {
     $system_path = drupal_lookup_path('source', $encoded_url);
-    $path = split('/', $system_path);
+    $path = explode('/', $system_path);
     $nid = $path[1];
   }
   else {
