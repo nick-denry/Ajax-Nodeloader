@@ -32,18 +32,18 @@ Examples:
   4. Added support for custom display-to targets selectors via rel attribute
      and JSON. Example:
 
-     <a link="/node/2" class="nodeloader" rel={'title':'#selector1',
+     <a href="/node/2" class="nodeloader" rel={'title':'#selector1',
      'body':'#selector2'}>This link shows your node #2 title in id="selector1"
       element, and your node #2 body in id="selector2" element</a>
 
      You can point title or node separately from each other, so
 
-     <a link="/node/2" class="nodeloader"
+     <a href="/node/2" class="nodeloader"
      rel={'title':'#selector1'}>Only title custom target</a>
 
      or
 
-     <a link="/node/2" class="nodeloader"
+     <a href="/node/2" class="nodeloader"
      rel={'body':'#selector2'}>Only body custom target</a>
 
      also allowed. Custom target string must be single quoted for correct work.
