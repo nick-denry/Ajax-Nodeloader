@@ -69,9 +69,6 @@
           // eval('(' + data + ')');
           var node = jQuery.parseJSON(data);
 
-          // Set .home class for #page-title header.
-          $('#page-title').toggleClass('home', link_attr == 'home');
-
           // Set up content to targets or default places.
           var ajaxNodeloaderDisplay = new Object ({title:'#page-title',
           content:'div.node > div.content'});
@@ -81,6 +78,9 @@
             ajaxNodeloaderDisplay.title = Drupal.settings.ajax_nodeloader.display_title;
             ajaxNodeloaderDisplay.content = Drupal.settings.ajax_nodeloader.display_content;
           }
+
+          // Set .home class for #page-title header.
+          $(ajaxNodeloaderDisplay.title).toggleClass('home', link_attr == 'home');
 
           // Set document title, if enabled.
           if (Drupal.settings.ajax_nodeloader.set_title) {
